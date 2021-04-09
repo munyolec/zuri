@@ -30,7 +30,7 @@ def main():
     }
     new_budget = Budget()     #instance of the class Budget
     print("Welcome \n")
-    selection=(int(input("Select a category: Food (1) Clothing (2) Entertainment (3): \n")))
+    selection=(int(input("Select a category: Food (1) Entertainment (2) Clothing (3): \n")))
     option_values=[1,2,3]
     if selection not in option_values:
         print("Invalid Option, Please try again")
@@ -47,23 +47,19 @@ def main():
         print(new_budget.categories)
     if option==3:
         new_budget.balance(cat_map[selection])
-        # print(new_budget.categories)
+
         
     if option==4:
         isValidOption=False
         while isValidOption==False:
-            transfer_from=int(input("Transfer from :Food (1) Clothing (2) Entertainment (3) \n"))
-            if transfer_from not in option_values:
+            print(f"You are about to transfer funds from the {cat_map[selection]} category")
+            transfer_to=int(input("Transfer to? : Food (1) Entertainment (2) Clothing (3)"))
+            if transfer_to not in option_values:
                 print("Invalid Option, Please try again")
-                # isValidOption=False
             else:
-                transfer_to=int(input("Transfer to: Food (1) Clothing (2) Entertainment (3)"))
-                if transfer_to not in option_values:
-                    print("Invalid Option, Please try again")
-                else:
-                    isValidOption=True
-                    transfer_amount=int(input(f"How much would you like to transfer from the {cat_map[transfer_from]} to the {cat_map[transfer_to]}? \n"))
-                    new_budget.transfer(cat_map[transfer_from],transfer_amount,cat_map[transfer_to])
-                    print(new_budget.categories)
+                isValidOption=True
+                transfer_amount=int(input(f"How much would you like to transfer from the {cat_map[selection]} category to the {cat_map[transfer_to]} category? \n"))
+                new_budget.transfer(cat_map[selection],transfer_amount,cat_map[transfer_to])
+                print(new_budget.categories)
 
 main()
