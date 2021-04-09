@@ -1,3 +1,8 @@
+exceptions.py
+dictionary.py
+classes.py
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
