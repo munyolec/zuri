@@ -12,7 +12,9 @@
 #initialize system
 import random
 
-database={}
+database={
+    1595892529:['Claire','Munyole','munyolec@gmail.com','123']
+}
 
 def init():
     print("Welcome to bankPHP")
@@ -27,18 +29,50 @@ def init():
 
 def login():
     print("********** Login **********")
-    accountNumberFromUser=int(input("Enter your account number \n"))
-    passwordUser=input("Enter your password \n")
 
-    for accountNumber, userDetails in database.items():
-        if accountNumber==accountNumberFromUser:
-            if userDetails[3]==passwordUser:
-                print("you are logged in")
-                bankOperation(userDetails)        
+    accountNumberFromUser=input("Enter your account number \n")
+
+    is_valid_account_number=account_number_validation(accountNumberFromUser)
+
+    if is_valid_account_number:
+
+        passwordUser=input("Enter your password \n")
+
+        for accountNumber, userDetails in database.items():
+            if accountNumber==int(accountNumberFromUser):
+                if userDetails[3]==passwordUser:
+                    print("you are logged in")
+                    bankOperation(userDetails)        
         
     print("Invalid details")
     login()
 
+#validation
+def account_number_validation(account_number):
+    # check that acc number is not empty
+    # check that acc number is 10 digits
+    # check that acc number is an int
+
+    if account_number:
+        if len(str(account_number)) ==10:
+            try:
+                int(account_number)
+            except ValueError:
+                print("Invalid account number, account number should be an integer")
+                return False
+            except TypeError:
+                print("Invalid account type")
+                return False
+        else:
+            print("Account number should be 10 digits")
+            return False
+    
+    else:
+        print("account number is a required field")
+        return False
+
+
+    pass
 
 def register():
     print("***** REGISTER ******")
