@@ -13,10 +13,9 @@
 import random
 import datetime
 import validation
+import database
 
-database={
-    1595892529:['Claire','Munyole','munyolec@gmail.com','123']
-}
+
 
 def init():
     print("Welcome to bankPHP")
@@ -60,12 +59,11 @@ def register():
     last_name=input("What is your last name? \n")
     password=input("Create a password \n")
 
-    try:
-        accountNumber=generateAccNumber()
-    except ValueError:
-        print("Account generation failed due to .....")
+    accountNumber=generateAccNumber()
 
     database[accountNumber]=[first_name,last_name,email,password]
+
+    #using database module to creeate a new user record
     print("Your account has been created.")
     print("your account number is %d" % accountNumber)
     
