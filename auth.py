@@ -11,6 +11,8 @@
 
 #initialize system
 import random
+import datetime
+import validation
 
 database={
     1595892529:['Claire','Munyole','munyolec@gmail.com','123']
@@ -32,7 +34,7 @@ def login():
 
     accountNumberFromUser=input("Enter your account number \n")
 
-    is_valid_account_number=account_number_validation(accountNumberFromUser)
+    is_valid_account_number=validation.account_number_validation(accountNumberFromUser)
 
     if is_valid_account_number:
 
@@ -44,35 +46,11 @@ def login():
                     print("you are logged in")
                     bankOperation(userDetails)        
         
-    print("Invalid details")
-    login()
-
-#validation
-def account_number_validation(account_number):
-    # check that acc number is not empty
-    # check that acc number is 10 digits
-    # check that acc number is an int
-
-    if account_number:
-        if len(str(account_number)) ==10:
-            try:
-                int(account_number)
-            except ValueError:
-                print("Invalid account number, account number should be an integer")
-                return False
-            except TypeError:
-                print("Invalid account type")
-                return False
-        else:
-            print("Account number should be 10 digits")
-            return False
-    
+        print("Invalid account number or password")
+        login()
     else:
-        print("account number is a required field")
-        return False
+        init()
 
-
-    pass
 
 def register():
     print("***** REGISTER ******")
@@ -81,7 +59,11 @@ def register():
     first_name=input("What is your first name? \n")
     last_name=input("What is your last name? \n")
     password=input("Create a password \n")
-    accountNumber=generateAccNumber()
+
+    try:
+        accountNumber=generateAccNumber()
+    except ValueError:
+        print("Account generation failed due to .....")
 
     database[accountNumber]=[first_name,last_name,email,password]
     print("Your account has been created.")
