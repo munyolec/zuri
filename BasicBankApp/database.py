@@ -5,7 +5,8 @@
 
 #find user 
 import os #allows for the deletion of a file
-user_db_path="BasicBankApp/data/user_record/"
+import validation
+user_db_path="./data/user_record/"
 
 def create(account_number,user_details):
 
@@ -49,9 +50,19 @@ def update(user_acc_number):
     #save the file
 
 def read(user_acc_number):
-    print("read user record")
     #find user with acc number
     #fetch the file content
+    try:
+        f=open(user_db_path+str(user_acc_number)+ ".txt", "r")
+        # return f.readline()
+    except FileNotFoundError:
+        return "User not found"
+    except FileExistsError:
+        return "User does not exist"
+    
+    else:
+        return f.readline()
+
 
 def delete(user_acc_number):
 
@@ -73,9 +84,15 @@ def delete(user_acc_number):
     #delete the user record (file)
     #return true
 
-def find(user_acc_number):
-    print("find user")
-    #find user record in the data folder
+def does_email_exist(user_acc_number, email):
+    all_users = os.listdir(user_db_path) #list everything in the db folder
+    for user in all_users:
+        print("user printed --->")
+        print(user)
+        print("\n")
+     
+    
     
 # create(3567909922,['Claire','Munyole','munyolec@gmail.com','password', 200])
-print(delete(2715789230))
+# print(read(9766774101))
+does_email_exist(9766774101,'wandavision@marvel.com')
