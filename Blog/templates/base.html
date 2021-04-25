@@ -8,14 +8,21 @@
     </head>
     <body>
         <header>
-            <div class="nav-lef">
+            <div class="nav-left">
                 <h1>
                     <a href="{% url 'home' %}">Django Blog</a>
                 </h1>
             </div>
-            <div class="nav-right">
-                <a href="{% url 'post_new' %}" >New Blog Post</a>
+            <div >
+                <div class="nav-right">
+                    <a href="{% url 'post_new' %}" >New Blog Post</a> 
+                </div>
+                <div class="nav-right">
+                    <a href="{% url 'register' %} " > Register </a>
+                </div>
             </div>
+            
+            
             
         </header>
         <div>

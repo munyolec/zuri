@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% for user in object_list %}
+    <div class="post-entry">
+        <h2> <a href="{% url 'user' user.pk %}">{{user.first_name}} </a></h2>
+       
+    </div>
+    {% endfor %}
+
+
+{% endblock %}
