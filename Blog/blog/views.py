@@ -1,7 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Post, User
+from django.views import generic
+from django.contrib import messages
+
+
+from django.contrib.auth.forms import UserCreationForm
 
 # Create your views here.
 class BlogListView(ListView):
@@ -29,8 +34,15 @@ class BlogDeleteView(DeleteView):
 
 class UserRegisterView(CreateView):
     model=User
-    template_name="register.html"
-    fields=['first_name', 'last_name', 'email']
+    form_class = UserCreationForm
+    success_url = reverse_lazy('home')
+    template_name = 'register.html'
+
+    # # form_class = UserCreationForm
+    # # success_url = reverse_lazy('home')
+    # template_name="register.html"
+    # # fields=['first_name', 'last_name', 'email']
+    
 class UserListView(ListView):
     model=User
     template_name='user_list.html'
@@ -38,3 +50,13 @@ class UserListView(ListView):
 class UserDetailView(DetailView):
     model=User
     template_name='user.html'
+
+
+def registerPage(request):
+    form=UserCreationForm()
+    if request.method == 'POST':
+            form = UserCreationForm(request.POST)
+            if form.is_valid():
+                form.save()
+    context={'form': form}
+    return render (request, 'register.html',context)
