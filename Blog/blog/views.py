@@ -1,9 +1,12 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponseRedirect,HttpResponse
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Post, User
 from django.views import generic
 from django.contrib import messages
+from .forms import CreateUserForm
+
+from django.contrib.auth import authenticate, login, logout
 
 
 from django.contrib.auth.forms import UserCreationForm
@@ -38,10 +41,6 @@ class UserRegisterView(CreateView):
     success_url = reverse_lazy('home')
     template_name = 'register.html'
 
-    # # form_class = UserCreationForm
-    # # success_url = reverse_lazy('home')
-    # template_name="register.html"
-    # # fields=['first_name', 'last_name', 'email']
     
 class UserListView(ListView):
     model=User
@@ -53,10 +52,44 @@ class UserDetailView(DetailView):
 
 
 def registerPage(request):
-    form=UserCreationForm()
-    if request.method == 'POST':
-            form = UserCreationForm(request.POST)
+    if request.user.is_authenticated:
+        return redirect('home')
+    else:
+        form=CreateUserForm()
+        if request.method == 'POST':
+            form = CreateUserForm(request.POST)
             if form.is_valid():
                 form.save()
-    context={'form': form}
-    return render (request, 'register.html',context)
+                new_user = authenticate(
+                    username=form.cleaned_data['username'],
+                    password=form.cleaned_data['password1']
+                )
+                # login(request, new_user)
+                return redirect('home')
+        else:
+            form = CreateUserForm()
+        return render(request, 'register.html', {'form': form})
+
+# def loginPage(request):
+# 	if request.user.is_authenticated:
+# 		return redirect('home')
+# 	else:
+# 		if request.method == 'POST':
+# 			username = request.POST.get('username')
+# 			password =request.POST.get('password')
+
+# 			user = authenticate(request, username=username, password=password)
+
+# 			if user is not None:
+# 				login(request, user)
+# 				return redirect('home')
+# 			else:
+# 				messages.info(request, 'Username OR password is incorrect')
+
+# 		context = {}
+# 		return render(request, 'login.html', context)
+
+
+
+
+  

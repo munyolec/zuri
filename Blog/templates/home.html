@@ -1,6 +1,25 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<header class="masthead">
+    
+    <div class="container">
+        <div class="row">
+            <div class=" col-md-8 col-md-10 mx-auto">
+                <div class="site-heading">
+                    <h3 class=" site-heading my-4 mt-3 text-black">
+                     {% if user.is_authenticated %}
+                        Welcome to my awesome Blog {{ user.username }}
+                        {% else %}
+                        Welcome to my awesome Blog
+                        {% endif %}
+                    </h3>
+                    <p class="text-light">I love to code...hope u do too as well!!! &nbsp
+                    </p>
+                </div>
+            </div>
+     
+</header>
     {% for post in object_list %}
     <div class="post-entry">
         <h2> <a href="{% url 'post_template' post.pk %}">{{post.title}}</a></h2>

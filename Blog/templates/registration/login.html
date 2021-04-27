@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="container">
-    <h2> Register </h2>
+    <h2>Login</h2>
     <form method="POST">
         {% csrf_token %}
         {% for field in form %}
@@ -11,10 +11,11 @@
             <p>{{ field }}</p>
         </div>
         {% endfor %}
-        <button type="submit" class="btn btn-primary">Sign Up</button>
+        <button type="submit" class="btn btn-primary">Login</button>
+        <button type="reset" class="btn btn-primary">Reset</button>
     </form>
     <div>
-        <a href="{% url 'login' %}">Already a member? Login</a>
+        <a href="{% url 'register' %}">Not a Member...Sign up</a>
 
     </div>
     <div>

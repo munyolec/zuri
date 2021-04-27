@@ -16,7 +16,11 @@ class Post(models.Model):
 class User(models.Model):
     first_name=models.CharField(max_length=20)
     last_name=models.CharField(max_length=20)
+    username=models.CharField(max_length=20)
     email=models.EmailField()
+    password=models.CharField(max_length=50)
+    # password=models.CharField(max_length=50)
+
 
     def __str__(self):
         return self.first_name
