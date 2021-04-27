@@ -52,23 +52,19 @@ class UserDetailView(DetailView):
 
 
 def registerPage(request):
-    if request.user.is_authenticated:
-        return redirect('home')
+    if request.method == 'POST':
+        form = CreateUserForm(request.POST)
+        if form.is_valid():
+            new_user = form.save()
+            # new_user = authenticate(
+            #     username=form.cleaned_data['username'],
+            #     password=form.cleaned_data['password1']
+            # )
+            login(request, new_user,backend='django.contrib.auth.backends.ModelBackend')
+            return redirect('home')
     else:
-        form=CreateUserForm()
-        if request.method == 'POST':
-            form = CreateUserForm(request.POST)
-            if form.is_valid():
-                form.save()
-                new_user = authenticate(
-                    username=form.cleaned_data['username'],
-                    password=form.cleaned_data['password1']
-                )
-                # login(request, new_user)
-                return redirect('home')
-        else:
-            form = CreateUserForm()
-        return render(request, 'register.html', {'form': form})
+        form = CreateUserForm()
+    return render(request, 'register.html', {'form': form})
 
 # def loginPage(request):
 # 	if request.user.is_authenticated:
@@ -89,7 +85,11 @@ def registerPage(request):
 # 		context = {}
 # 		return render(request, 'login.html', context)
 
-
+class UserLoginView(CreateView):
+    model=User
+    success_url = reverse_lazy('home')
+    template_name = 'login.html'
+    fields=['username','password']
 
 
   
