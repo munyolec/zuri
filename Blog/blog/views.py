@@ -53,43 +53,15 @@ class UserDetailView(DetailView):
 
 def registerPage(request):
     if request.method == 'POST':
-        form = CreateUserForm(request.POST)
+        form = UserCreationForm(request.POST)
         if form.is_valid():
-            new_user = form.save()
-            # new_user = authenticate(
-            #     username=form.cleaned_data['username'],
-            #     password=form.cleaned_data['password1']
-            # )
-            login(request, new_user,backend='django.contrib.auth.backends.ModelBackend')
-            return redirect('home')
+            form.save()
+            return redirect('login')
     else:
-        form = CreateUserForm()
-    return render(request, 'register.html', {'form': form})
+        form=UserCreationForm
+    return render(request, 'registration/register.html', {'form': form})
 
-# def loginPage(request):
-# 	if request.user.is_authenticated:
-# 		return redirect('home')
-# 	else:
-# 		if request.method == 'POST':
-# 			username = request.POST.get('username')
-# 			password =request.POST.get('password')
 
-# 			user = authenticate(request, username=username, password=password)
-
-# 			if user is not None:
-# 				login(request, user)
-# 				return redirect('home')
-# 			else:
-# 				messages.info(request, 'Username OR password is incorrect')
-
-# 		context = {}
-# 		return render(request, 'login.html', context)
-
-class UserLoginView(CreateView):
-    model=User
-    success_url = reverse_lazy('home')
-    template_name = 'login.html'
-    fields=['username','password']
 
 
   

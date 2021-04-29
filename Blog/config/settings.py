@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'blog'
 ]
+AUTHENTICATION_BACKENDS = ('django.contrib.auth.backends.ModelBackend'),
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -127,5 +128,5 @@ STATICFILES_DIRS=[str(BASE_DIR.joinpath("static"))]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_REDIRECT_URL='home'
+LOGIN_REDIRECT_URL='user_list'
 LOGOUT_REDIRECT_URL='home'
